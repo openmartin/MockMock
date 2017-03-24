@@ -1,6 +1,7 @@
 package com.mockmock;
 
 import com.mockmock.console.Parser;
+import com.mockmock.dao.Store;
 import com.mockmock.server.Server;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,6 +19,11 @@ public class AppStarter
         // get the parameters that are allowed
         Parser parser = (Parser) factory.getBean("parser");
         settings = parser.parseOptions(args, settings);
+
+        System.out.println(settings.getJdbcUrl());
+        // set jdbc connection
+        Store store = (Store) factory.getBean("store");
+        store.getJdbcTemplate(settings);
 
         Server smtpServer = (Server) factory.getBean("smtpServer");
         smtpServer.setPort(settings.getSmtpPort());

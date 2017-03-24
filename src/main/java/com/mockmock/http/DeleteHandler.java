@@ -1,5 +1,6 @@
 package com.mockmock.http;
 
+import com.mockmock.dao.Store;
 import com.mockmock.mail.MailQueue;
 import org.eclipse.jetty.server.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.io.IOException;
 @Service
 public class DeleteHandler extends BaseHandler
 {
-    private MailQueue mailQueue;
+    private Store store;
 
     @Override
     public void handle(String target, Request request, HttpServletRequest httpServletRequest,
@@ -27,14 +28,14 @@ public class DeleteHandler extends BaseHandler
         setDefaultResponseOptions(response);
 
         // empty the mail queue
-        this.mailQueue.emptyQueue();
+        this.store.deleteAll();
 
         setDefaultResponseOptions(response);
         request.setHandled(true);
     }
 
     @Autowired
-    public void setMailQueue(MailQueue mailQueue) {
-        this.mailQueue = mailQueue;
+    public void setStore(Store store){
+        this.store = store;
     }
 }

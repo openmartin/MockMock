@@ -1,5 +1,6 @@
 package com.mockmock.http;
 
+import com.mockmock.dao.Store;
 import com.mockmock.mail.MailQueue;
 import com.mockmock.mail.MockMail;
 import org.eclipse.jetty.server.Request;
@@ -18,7 +19,7 @@ public class MailDeleteHandler extends BaseHandler
 {
 	private String pattern = "^/delete/([0-9]+)/?$";
 
-	private MailQueue mailQueue;
+	private Store store;
 
 	@Override
 	public void handle(String target, Request request, HttpServletRequest httpServletRequest,
@@ -35,13 +36,7 @@ public class MailDeleteHandler extends BaseHandler
 			return;
 		}
 
-		MockMail mockMail = this.mailQueue.getById(mailId);
-		if(mockMail == null)
-		{
-			return;
-		}
-
-		this.mailQueue.deleteById(mailId);
+		this.store.deleteMail(mailId);
 
 		response.setHeader("Location:", "/");
 		response.setStatus(302);
@@ -86,7 +81,7 @@ public class MailDeleteHandler extends BaseHandler
 	}
 
 	@Autowired
-	public void setMailQueue(MailQueue mailQueue) {
-		this.mailQueue = mailQueue;
+	public void setStore(Store store){
+		this.store = store;
 	}
 }

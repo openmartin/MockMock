@@ -27,6 +27,9 @@ public class Parser
         options.addOption("ft", true, "Filters out to email addresses (comma separated).");
         options.addOption("s", true, "Full path to the folder containing the static files like images and css.");
         options.addOption("ec", false, "Turns on emails printing to console. Default off");
+        options.addOption("jdbc", true, "Use MySQL database to store emails");
+        options.addOption("user", true, "Use MySQL database to store emails");
+        options.addOption("pwd", true, "Use MySQL database to store emails");
         options.addOption("?", false, "Shows this help information.");
 
         // parse the given arguments
@@ -43,13 +46,17 @@ public class Parser
                 System.exit(0);
             }
 
-            partseShowEmailInConsoleOption(cmd, settings);
+            parseShowEmailInConsoleOption(cmd, settings);
             parseSmtpPortOption(cmd, settings);
             parseHttpPortOption(cmd, settings);
             parseMailQueueSizeOption(cmd, settings);
 			parseFilterFromEmailAddressesOption(cmd, settings);
 			parseFilterToEmailAddressesOption(cmd, settings);
             parseStaticFolderOption(cmd, settings);
+
+            parseJdbcUrl(cmd, settings);
+            parseJdbcUser(cmd, settings);
+            parseJdbcPwd(cmd, settings);
         }
         catch (ParseException e)
         {
@@ -59,7 +66,7 @@ public class Parser
         return settings;
     }
 
-    protected void partseShowEmailInConsoleOption(CommandLine cmd, Settings settings)
+    protected void parseShowEmailInConsoleOption(CommandLine cmd, Settings settings)
     {
         if(cmd.hasOption("ec"))
         {
@@ -147,4 +154,24 @@ public class Parser
             settings.setStaticFolderPath(cmd.getOptionValue("s"));
         }
     }
+
+    protected void parseJdbcUrl(CommandLine cmd, Settings settings){
+        if(cmd.hasOption("jdbc")){
+            settings.setJdbcUrl(cmd.getOptionValue("jdbc"));
+        }
+    }
+
+    protected void parseJdbcUser(CommandLine cmd, Settings settings){
+        if(cmd.hasOption("user")){
+            settings.setJdbcUser(cmd.getOptionValue("user"));
+        }
+    }
+
+    protected void parseJdbcPwd(CommandLine cmd, Settings settings){
+        if(cmd.hasOption("pwd")){
+            settings.setJdbcPwd(cmd.getOptionValue("pwd"));
+        }
+    }
+
+
 }

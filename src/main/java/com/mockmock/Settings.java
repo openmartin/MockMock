@@ -43,6 +43,15 @@ public class Settings
      */
     private String staticFolderPath;
 
+    /**
+     * jdbc url
+     */
+    private String jdbcUrl = "";
+
+    private String jdbcUser = "";
+
+    private String jdbcPwd = "";
+
 
     public boolean getShowEmailInConsole()
     {
@@ -100,5 +109,29 @@ public class Settings
 
     public void setStaticFolderPath(String staticFolderPath) {
         this.staticFolderPath = staticFolderPath;
+    }
+
+    public String getJdbcUrl() {
+        return jdbcUrl;
+    }
+
+    public void setJdbcUrl(String jdbcUrl) {
+        this.jdbcUrl = jdbcUrl;
+    }
+
+    public String getJdbcUser() {
+        return jdbcUser;
+    }
+
+    public void setJdbcUser(String jdbcUser) {
+        this.jdbcUser = jdbcUser;
+    }
+
+    public String getJdbcPwd() {
+        return jdbcPwd;
+    }
+
+    public void setJdbcPwd(String jdbcPwd) {
+        this.jdbcPwd = jdbcPwd;
     }
 }

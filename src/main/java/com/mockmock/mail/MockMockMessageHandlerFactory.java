@@ -2,6 +2,7 @@ package com.mockmock.mail;
 
 import com.google.common.eventbus.EventBus;
 import com.mockmock.Settings;
+import com.mockmock.dao.Store;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.io.*;
+import java.util.Date;
 import java.util.Properties;
 
 @Service
@@ -25,6 +27,7 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
 {
     private EventBus eventBus;
 	private Settings settings;
+	private Store store;
 
     @Autowired
     public MockMockMessageHandlerFactory(EventBus eventBus)
@@ -37,6 +40,11 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
 	{
 		this.settings = settings;
 	}
+
+	@Autowired
+    public void setStore(Store store){
+        this.store = store;
+    }
 
 	@Override
     public MessageHandler create(MessageContext messageContext)
@@ -221,7 +229,10 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                 System.out.println("Finished");
             }
 
-            eventBus.post(mockMail);
+            //eventBus.post(mockMail);
+            // don't use eventbus, use MySQL database
+            mockMail.setReceive_time(new Date());
+            store.addMail(mockMail);
         }
 
         /**

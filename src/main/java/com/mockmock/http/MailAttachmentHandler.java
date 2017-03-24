@@ -1,5 +1,6 @@
 package com.mockmock.http;
 
+import com.mockmock.dao.Store;
 import com.mockmock.mail.MailQueue;
 import com.mockmock.mail.MockMail;
 import org.apache.commons.io.IOUtils;
@@ -29,7 +30,7 @@ public class MailAttachmentHandler extends BaseHandler{
 
     private String pattern = "^/attachment/([0-9]+)/?$";
 
-    private MailQueue mailQueue;
+    private Store store;
 
     @Override
     public void handle(String target, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
@@ -45,7 +46,7 @@ public class MailAttachmentHandler extends BaseHandler{
             return;
         }
 
-        MockMail mockMail = this.mailQueue.getById(mailId);
+        MockMail mockMail = this.store.getMail(mailId);
 
         if(mockMail == null)
         {
@@ -115,7 +116,7 @@ public class MailAttachmentHandler extends BaseHandler{
     }
 
     @Autowired
-    public void setMailQueue(MailQueue mailQueue) {
-        this.mailQueue = mailQueue;
+    public void setStore(Store store){
+        this.store = store;
     }
 }

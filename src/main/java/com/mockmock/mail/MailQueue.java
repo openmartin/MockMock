@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
 
 @Service
@@ -29,6 +30,10 @@ public class MailQueue
         Collections.reverse(mailQueue);
 
         trimQueue();
+    }
+
+    public void setMailQueue(ArrayList<MockMail> mailList){
+        this.mailQueue = mailList;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mockmock.http;
 
+import com.mockmock.dao.Store;
 import com.mockmock.htmlbuilder.FooterHtmlBuilder;
 import com.mockmock.htmlbuilder.HeaderHtmlBuilder;
 import com.mockmock.htmlbuilder.MailViewHtmlBuilder;
@@ -25,7 +26,7 @@ public class MailDetailHandler extends BaseHandler
     private FooterHtmlBuilder footerHtmlBuilder;
     private MailViewHtmlBuilder mailViewHtmlBuilder;
 
-    private MailQueue mailQueue;
+    private Store store;
 
     @Override
     public void handle(String target, Request request, HttpServletRequest httpServletRequest,
@@ -42,7 +43,7 @@ public class MailDetailHandler extends BaseHandler
             return;
         }
 
-        MockMail mockMail = this.mailQueue.getById(mailId);
+        MockMail mockMail = this.store.getMail(mailId);
         if(mockMail == null)
         {
             return;
@@ -114,7 +115,7 @@ public class MailDetailHandler extends BaseHandler
     }
 
     @Autowired
-    public void setMailQueue(MailQueue mailQueue) {
-        this.mailQueue = mailQueue;
+    public void setStore(Store store){
+        this.store = store;
     }
 }
