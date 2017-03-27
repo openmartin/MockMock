@@ -60,7 +60,7 @@ public class MailListHtmlBuilder implements HtmlBuilder
         StringRecipientHtmlBuilder recipientBuilder = new StringRecipientHtmlBuilder();
         recipientBuilder.setMaxLength(27);
         recipientBuilder.setMockMail(mail);
-        recipientBuilder.setRecipientType(MimeMessage.RecipientType.TO);
+        recipientBuilder.setRecipientType(MimeMessage.RecipientType.BCC);
         String toOutput = recipientBuilder.build();
 
         String subjectOutput;
