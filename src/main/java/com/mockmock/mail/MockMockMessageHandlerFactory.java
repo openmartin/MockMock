@@ -99,12 +99,13 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
         @Override
         public void recipient(String recipient) throws RejectException
         {
-            if (recipient != null && recipient.equals("")) {
+            if (recipient != null && !recipient.equals("")) {
                 this.mockMail.addRecipient(recipient);
             }
 
-            if(settings.getShowEmailInConsole())
-            {
+            if(settings.getShowEmailInConsole()) {
+                System.out.println("RECIPIENT:" + recipient);
+            } else {
                 System.out.println("RECIPIENT:" + recipient);
             }
         }
@@ -129,19 +130,7 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                 MimeMessage message = new MimeMessage(session, is);
                 mockMail.setSubject(message.getSubject());
 
-                // add Recipent to MimeMessage
-                ArrayList<InternetAddress> bccAddrs = new ArrayList<InternetAddress>();
-                for (String str : mockMail.getBcc()) {
-                    bccAddrs.add(new InternetAddress(str));
-                }
-                message.addRecipients(Message.RecipientType.BCC, bccAddrs.toArray(new InternetAddress[0]));
-                mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
-
-                mockMail.setMimeMessage(message);
-                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
-
                 System.out.println("Subject: " + mockMail.getSubject());
-                System.out.println("BCC: " + mockMail.getTo());
 
                 Object messageContent = message.getContent();
                 if(messageContent instanceof Multipart)
@@ -247,7 +236,24 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
             //eventBus.post(mockMail);
             // don't use eventbus, use MySQL database
             mockMail.setReceive_time(new Date());
-            mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
+            try {
+                // add Recipent to MimeMessage
+                ArrayList<InternetAddress> bccAddrs = new ArrayList<InternetAddress>();
+                for (String str : mockMail.getBcc()) {
+                    bccAddrs.add(new InternetAddress(str));
+                }
+                MimeMessage message = mockMail.getMimeMessage();
+                message.addRecipients(Message.RecipientType.BCC, bccAddrs.toArray(new InternetAddress[0]));
+                mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
+
+                mockMail.setMimeMessage(message);
+                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             store.addMail(mockMail);
         }
 
