@@ -22,8 +22,11 @@ public class AddressesHtmlBuilder implements HtmlBuilder
 
         output += "From: " + fromHtmlBuilder.build() + "<br />\n";
 
-        recipientHtmlBuilder.setRecipientType(MimeMessage.RecipientType.TO);
-        output += "To: " + recipientHtmlBuilder.build() + "<br />\n";
+//        recipientHtmlBuilder.setRecipientType(MimeMessage.RecipientType.TO);
+//        output += "To: " + recipientHtmlBuilder.build() + "<br />\n";
+
+        recipientHtmlBuilder.setRecipientType(MimeMessage.RecipientType.BCC);
+        output += "Bcc: " + recipientHtmlBuilder.buildFromDB() + "<br />\n";
 
         recipientHtmlBuilder.setRecipientType(MimeMessage.RecipientType.CC);
         String ccOutput = recipientHtmlBuilder.build();

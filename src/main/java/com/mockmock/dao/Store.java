@@ -3,12 +3,11 @@ package com.mockmock.dao;
 import com.mockmock.Settings;
 import com.mockmock.mail.MailQueue;
 import com.mockmock.mail.MockMail;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.io.IOUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,7 +83,7 @@ public class Store {
             MockMail mockMail = new MockMail();
             mockMail.setId(rs.getLong("id"));
             mockMail.setFrom(rs.getString("mail_from"));
-            mockMail.setFrom(rs.getString("mail_to"));
+            mockMail.setTo(rs.getString("mail_to"));
             mockMail.setSubject(rs.getString("mail_subject"));
             mockMail.setReceive_time(rs.getDate("receive_time"));
 

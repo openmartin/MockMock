@@ -33,7 +33,7 @@ public class MailListHtmlBuilder implements HtmlBuilder
             output += "  <table class=\"table table-striped\">\n";
             output += "    <thead>\n";
             output += "      <th>From</th>\n";
-            output += "      <th>To</th>\n";
+            output += "      <th>Bcc</th>\n";
             output += "      <th>Subject</th>\n";
             output += "      <th>Action</th>\n";
             output += "    </thead>\n";
@@ -61,7 +61,7 @@ public class MailListHtmlBuilder implements HtmlBuilder
         recipientBuilder.setMaxLength(27);
         recipientBuilder.setMockMail(mail);
         recipientBuilder.setRecipientType(MimeMessage.RecipientType.BCC);
-        String toOutput = recipientBuilder.build();
+        String toOutput = recipientBuilder.buildFromDB();
 
         String subjectOutput;
         if(mail.getSubject() == null)

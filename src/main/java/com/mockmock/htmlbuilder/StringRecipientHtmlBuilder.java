@@ -10,9 +10,9 @@ import javax.mail.internet.MimeMessage;
 
 public class StringRecipientHtmlBuilder implements HtmlBuilder
 {
+    Message.RecipientType recipientType;
     private MockMail mockMail;
     private int maxLength = 0;
-    Message.RecipientType recipientType;
 
     public String build()
     {
@@ -72,7 +72,12 @@ public class StringRecipientHtmlBuilder implements HtmlBuilder
             shortName = output;
         }
 
-        return "<span title=\"" + output + "\">" + shortName + "</title>";
+        return "<span title=\"" + output + "\">" + shortName + "</span>";
+    }
+
+    public String buildFromDB() {
+        String output = mockMail.getTo();
+        return "<span>" + output + "</span>";
     }
 
     public void setMockMail(MockMail mockMail)

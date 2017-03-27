@@ -204,8 +204,8 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                 }
 
                 //modify raw mail
-                mockMail.setMimeMessage(message);
-                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
+                //mockMail.setMimeMessage(message);
+                //mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
             }
             catch (MessagingException e)
             {
