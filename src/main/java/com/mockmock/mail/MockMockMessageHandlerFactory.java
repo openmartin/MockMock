@@ -135,12 +135,9 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                 for (String str : mockMail.getBcc()) {
                     bccAddrs.add(new InternetAddress(str));
                 }
-                message = mockMail.getMimeMessage();
+
                 message.addRecipients(Message.RecipientType.BCC, bccAddrs.toArray(new InternetAddress[0]));
                 mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
-
-                mockMail.setMimeMessage(message);
-                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
 
                 System.out.println("BCC: " + mockMail.getTo());
 
@@ -205,6 +202,10 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                         mockMail.setBodyHtml(messageContent.toString());
                     }
                 }
+
+                //modify raw mail
+                mockMail.setMimeMessage(message);
+                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
             }
             catch (MessagingException e)
             {
