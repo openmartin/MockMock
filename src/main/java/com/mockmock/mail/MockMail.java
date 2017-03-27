@@ -11,6 +11,7 @@ import javax.mail.internet.MimeUtility;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -19,7 +20,7 @@ public class MockMail implements Comparable<MockMail>
     private long id;
     private String from;
     private String to;
-    private String bcc;
+    private ArrayList<String> bcc;
     private String subject;
     private String body;
     private String bodyHtml;
@@ -60,12 +61,21 @@ public class MockMail implements Comparable<MockMail>
         this.to = to;
     }
 
-    public String getBcc() {
+    public ArrayList<String> getBcc() {
         return bcc;
     }
 
-    public void setBcc(String bcc) {
+    public void setBcc(ArrayList<String> bcc) {
         this.bcc = bcc;
+    }
+
+    public void addRecipient(String addr) {
+        if (this.bcc == null) {
+            this.bcc = new ArrayList<String>();
+            this.bcc.add(addr);
+        } else {
+            this.bcc.add(addr);
+        }
     }
 
     public String getSubject()
@@ -183,7 +193,7 @@ public class MockMail implements Comparable<MockMail>
                     BodyPart bodyPart = multipart.getBodyPart(i);
                     String contentType = bodyPart.getContentType();
                     contentType = contentType.replaceAll("\t|\r|\n", "");
-                    System.out.println(contentType);
+                    //System.out.println(contentType);
 
                     if(contentType.matches("text/plain.*"))
                     {
@@ -199,7 +209,7 @@ public class MockMail implements Comparable<MockMail>
                         for (int j = 0; j < contentMulti.getCount(); j++){
                             BodyPart subPart = contentMulti.getBodyPart(i);
                             String subContentType = subPart.getContentType();
-                            System.out.println(subContentType);
+                            //System.out.println(subContentType);
                             String encoding = "UTF-8";
 
                             if(subContentType.matches("text/html.*")){
