@@ -129,8 +129,20 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
             {
                 MimeMessage message = new MimeMessage(session, is);
                 mockMail.setSubject(message.getSubject());
-
                 System.out.println("Subject: " + mockMail.getSubject());
+                // add Recipent to MimeMessage
+                ArrayList<InternetAddress> bccAddrs = new ArrayList<InternetAddress>();
+                for (String str : mockMail.getBcc()) {
+                    bccAddrs.add(new InternetAddress(str));
+                }
+                message = mockMail.getMimeMessage();
+                message.addRecipients(Message.RecipientType.BCC, bccAddrs.toArray(new InternetAddress[0]));
+                mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
+
+                mockMail.setMimeMessage(message);
+                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
+
+                System.out.println("BCC: " + mockMail.getTo());
 
                 Object messageContent = message.getContent();
                 if(messageContent instanceof Multipart)
@@ -236,23 +248,6 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
             //eventBus.post(mockMail);
             // don't use eventbus, use MySQL database
             mockMail.setReceive_time(new Date());
-            try {
-                // add Recipent to MimeMessage
-                ArrayList<InternetAddress> bccAddrs = new ArrayList<InternetAddress>();
-                for (String str : mockMail.getBcc()) {
-                    bccAddrs.add(new InternetAddress(str));
-                }
-                MimeMessage message = mockMail.getMimeMessage();
-                message.addRecipients(Message.RecipientType.BCC, bccAddrs.toArray(new InternetAddress[0]));
-                mockMail.setTo(StringUtils.join(mockMail.getBcc(), ","));
-
-                mockMail.setMimeMessage(message);
-                mockMail.setRawMail(IOUtils.toString(message.getInputStream()));
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             store.addMail(mockMail);
         }
