@@ -1,20 +1,18 @@
 package com.mockmock.mail;
 
 import com.google.common.eventbus.Subscribe;
-import com.mockmock.AppStarter;
 import com.mockmock.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.ListIterator;
 
 @Service
 public class MailQueue
 {
-    private static ArrayList<MockMail> mailQueue = new ArrayList<>();
+    private static ArrayList<MockMail> mailQueue = new ArrayList<MockMail>();
 
     private Settings settings;
 
@@ -32,16 +30,16 @@ public class MailQueue
         trimQueue();
     }
 
-    public void setMailQueue(ArrayList<MockMail> mailList){
-        this.mailQueue = mailList;
-    }
-
     /**
      * @return Returns the complete mailQueue
      */
     public ArrayList<MockMail> getMailQueue()
     {
         return mailQueue;
+    }
+
+    public void setMailQueue(ArrayList<MockMail> mailList) {
+        this.mailQueue = mailList;
     }
 
     /**

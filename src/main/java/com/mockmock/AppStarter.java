@@ -20,7 +20,6 @@ public class AppStarter
         Parser parser = (Parser) factory.getBean("parser");
         settings = parser.parseOptions(args, settings);
 
-        System.out.println(settings.getJdbcUrl());
         // set jdbc connection
         Store store = (Store) factory.getBean("store");
         store.getJdbcTemplate(settings);

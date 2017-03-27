@@ -2,7 +2,6 @@ package com.mockmock.mail;
 
 import com.mockmock.Settings;
 import com.mockmock.dao.Store;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ import java.util.Date;
  */
 public class StoreTest {
 
-    private final String jdbcUrl = "jdbc:mysql://localhost:3306/test";
+    private final String jdbcUrl = "jdbc:mysql://localhost:3306/test?useSSL=false";
     private final String jdbcUser = "root";
     private final String jdbcPwd = "123456";
 

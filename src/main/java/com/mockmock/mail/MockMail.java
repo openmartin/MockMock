@@ -1,8 +1,6 @@
 package com.mockmock.mail;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.apache.commons.io.IOUtils;
-import org.subethamail.smtp.RejectException;
 
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
