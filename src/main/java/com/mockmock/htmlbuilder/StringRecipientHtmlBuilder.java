@@ -7,6 +7,7 @@ import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 
 public class StringRecipientHtmlBuilder implements HtmlBuilder
 {
@@ -76,8 +77,12 @@ public class StringRecipientHtmlBuilder implements HtmlBuilder
     }
 
     public String buildFromDB() {
-        String output = mockMail.getTo();
-        return "<span>" + output + "</span>";
+        ArrayList<String> allAddrs = mockMail.getBcc();
+        StringBuffer sb = new StringBuffer();
+        for (String addr : allAddrs) {
+            sb.append("<div>" + addr + "</div>");
+        }
+        return sb.toString();
     }
 
     public void setMockMail(MockMail mockMail)

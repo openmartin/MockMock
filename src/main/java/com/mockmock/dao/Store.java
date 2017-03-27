@@ -4,6 +4,7 @@ import com.mockmock.Settings;
 import com.mockmock.mail.MailQueue;
 import com.mockmock.mail.MockMail;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -86,6 +87,13 @@ public class Store {
             mockMail.setTo(rs.getString("mail_to"));
             mockMail.setSubject(rs.getString("mail_subject"));
             mockMail.setReceive_time(rs.getDate("receive_time"));
+
+            ArrayList<String> allAddrs = new ArrayList<String>();
+            String[] strAddrs = StringUtils.split(mockMail.getTo(), ",");
+            for (String str : strAddrs) {
+                allAddrs.add(str);
+            }
+            mockMail.setBcc(allAddrs);
 
             try {
                 Blob rawMailBlob =  rs.getBlob("mail_raw");
