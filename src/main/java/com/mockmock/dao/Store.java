@@ -41,7 +41,7 @@ public class Store {
     public void addMail(MockMail mockMail){
         String sql = "INSERT into mock_mail(mail_from, mail_to, mail_subject, mail_raw, receive_time, attatch_filename, attatchment) values(?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql, mockMail.getFrom(), mockMail.getTo(), mockMail.getSubject(), mockMail.getRawMail(),mockMail.getReceive_time(),
-                mockMail.getAttacheFileName(), mockMail.getAttachment());
+                mockMail.getAttacheFileName(), null);
     }
 
 
