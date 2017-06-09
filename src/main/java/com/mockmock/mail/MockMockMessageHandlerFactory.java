@@ -175,7 +175,7 @@ public class MockMockMessageHandlerFactory implements MessageHandlerFactory
                                 }
                             }
 
-                        } else if (contentType.matches("application/octet-stream.*") || contentType.matches("application/pdf")) {
+                        } else if (contentType.matches("application/octet-stream.*") || contentType.matches("application/pdf.*")) {
                             // attachment
                             String strFileName = MimeUtility.decodeText(bodyPart.getFileName());
                             mockMail.setAttacheFileName(strFileName);
