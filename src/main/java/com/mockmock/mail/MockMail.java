@@ -218,7 +218,7 @@ public class MockMail implements Comparable<MockMail>
                             }
                         }
 
-                    }else if(contentType.matches("application/octet-stream.*")){
+                    } else if (contentType.matches("application/octet-stream.*") || contentType.matches("application/pdf.*")) {
                         // attachment
                         String strFileName = MimeUtility.decodeText(bodyPart.getFileName());
                         this.setAttacheFileName(strFileName);
